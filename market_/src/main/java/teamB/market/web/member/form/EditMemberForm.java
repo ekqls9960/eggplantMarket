@@ -5,24 +5,27 @@ import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class EditMemberForm {
 	@NotBlank
-    private String nickname;
-	
-    @NotBlank
-    private String phoneNum;
-	
-    @NotBlank
-    private String postCode;
-	
+	private String nickname;
+
 	@NotBlank
-    private String roadAddr;
-	
+	private String phoneNum;
+
 	@NotBlank
-    private String detailAddr;
+	private String postCode;
+
+	@NotBlank
+	private String roadAddr;
+
+	@NotBlank
+	private String detailAddr;
+
+	private String currentPwd;
 	
-    private String currentPwd;
-    private String changePwd;
-    private String confirmChangePwd;
+	private String changePwd;
+	
+	private String confirmChangePwd;
 }

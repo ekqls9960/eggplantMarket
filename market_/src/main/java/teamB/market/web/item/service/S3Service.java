@@ -23,49 +23,47 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 public class S3Service {
 	private AmazonS3 s3Client;
 
-    @Value("${cloud.aws.credentials.access-key}")
-    private String accessKey;
+	@Value("${cloud.aws.credentials.access-key}")
+	private String accessKey;
 
-    @Value("${cloud.aws.credentials.secret-key}")
-    private String secretKey;
+	@Value("${cloud.aws.credentials.secret-key}")
+	private String secretKey;
 
-    @Value("${cloud.aws.s3.uploadBucket}")
-    private String uploadBucket;
+	@Value("${cloud.aws.s3.uploadBucket}")
+	private String uploadBucket;
 
-    @Value("${cloud.aws.region.static}")
-    private String region;
+	@Value("${cloud.aws.region.static}")
+	private String region;
 
-    @PostConstruct
-    public void setS3Client(){
-        AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
+	@PostConstruct
+	public void setS3Client() {
+		AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
 
-        s3Client = AmazonS3ClientBuilder.standard()
-                .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                .withRegion(this.region)
-                .build();
-    }
+		s3Client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials))
+				.withRegion(this.region).build();
+	}
 
-    public String upload(MultipartFile file) throws IOException {
+	public String upload(MultipartFile file) throws IOException {
 
-        String fileName = file.getOriginalFilename();
-        
-        //파일 이름 뒤에 현재 시간 붙여서 중복 방지
-        String uploadFileName = fileName+System.currentTimeMillis();
+		String fileName = file.getOriginalFilename();
 
-        s3Client.putObject(new PutObjectRequest(uploadBucket, uploadFileName, file.getInputStream(), null)
-                .withCannedAcl(CannedAccessControlList.PublicRead));
-        return s3Client.getUrl(uploadBucket, uploadFileName).toString();
-    }
-    
-    //파일 삭제
-    public void delete(String storedFilePath) {
-    	try {
-    		DeleteObjectRequest request = new DeleteObjectRequest(uploadBucket, storedFilePath);
-    		s3Client.deleteObject(request);
-    	}catch (AmazonServiceException e) {
-            e.printStackTrace();
-        } catch (SdkClientException e) {
-            e.printStackTrace();
-        }
-    }
+		// 파일 이름 뒤에 현재 시간 붙여서 파일명 중복 방지
+		String uploadFileName = fileName + System.currentTimeMillis();
+
+		s3Client.putObject(new PutObjectRequest(uploadBucket, uploadFileName, file.getInputStream(), null)
+				.withCannedAcl(CannedAccessControlList.PublicRead));
+		return s3Client.getUrl(uploadBucket, uploadFileName).toString();
+	}
+
+	// 파일 삭제
+	public void delete(String storedFilePath) {
+		try {
+			DeleteObjectRequest request = new DeleteObjectRequest(uploadBucket, storedFilePath);
+			s3Client.deleteObject(request);
+		} catch (AmazonServiceException e) {
+			e.printStackTrace();
+		} catch (SdkClientException e) {
+			e.printStackTrace();
+		}
+	}
 }

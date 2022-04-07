@@ -10,25 +10,21 @@ import teamB.market.domain.item.Category;
 import teamB.market.domain.item.Item;
 import teamB.market.domain.item.mapper.ItemMapper;
 
-
 @Service
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
-	
 
 	private final ItemMapper itemMapper;
-	//private final ShippingMapper shippingMapper;
 
 	@Override
 	public void save(Item item) {
-		 itemMapper.save(item);
+		itemMapper.save(item);
 	}
 
 	@Override
 	public Item findByMemberId(long memberId) {
 		return itemMapper.findByMemberId(memberId);
 	}
-
 
 	@Override
 	public List<Item> findAll() {
@@ -40,7 +36,6 @@ public class ItemServiceImpl implements ItemService {
 		return itemMapper.findById(id);
 	}
 
-
 	@Override
 	public Item findByOrderKey(String orderKey) {
 		return itemMapper.findByOrderKey(orderKey);
@@ -49,15 +44,15 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public void delete(long id) {
 		itemMapper.delete(id);
-		
+
 	}
 
 	@Override
 	public List<Item> findMyItemList(long memberId) {
 		List<Item> ls = itemMapper.findAll();
-		List<Item> sellerLs= new ArrayList<Item>();
-		for(int i=0; i<ls.size(); i++) {
-			if(ls.get(i).getMemberId()==memberId) {
+		List<Item> sellerLs = new ArrayList<Item>();
+		for (int i = 0; i < ls.size(); i++) {
+			if (ls.get(i).getMemberId() == memberId) {
 				sellerLs.add(ls.get(i));
 			}
 		}
@@ -78,25 +73,25 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public void updateHit(long id) {
 		itemMapper.updateHit(id);
-		
+
 	}
 
 	@Override
 	public List<Item> findByKeyword(String keyword) {
-		List<Item> ls=itemMapper.findByKeyWord(keyword);
+		List<Item> ls = itemMapper.findByKeyWord(keyword);
 		return ls;
 	}
 
 	@Override
 	public List<Item> findByCategory(String category) {
-		Category cat =  null;
-		if(category.equalsIgnoreCase("clothes")) {
+		Category cat = null;
+		if (category.equalsIgnoreCase("clothes")) {
 			cat = Category.CLOTHES;
-		}else if(category.equalsIgnoreCase("electro")) {
+		} else if (category.equalsIgnoreCase("electro")) {
 			cat = Category.ELECTRO;
-		}else if(category.equalsIgnoreCase("etc")) {
+		} else if (category.equalsIgnoreCase("etc")) {
 			cat = Category.ETC;
-		}else if(category.equalsIgnoreCase("living")) {
+		} else if (category.equalsIgnoreCase("living")) {
 			cat = Category.LIVING;
 		}
 		List<Item> ls = itemMapper.findByCategory(cat);
@@ -108,16 +103,14 @@ public class ItemServiceImpl implements ItemService {
 		List<Item> ls = new ArrayList<Item>();
 		if (condition.equals("highHit")) {
 			ls = itemMapper.findByHighHit();
-		}else if(condition.equals("lowPrice")) {
+		} else if (condition.equals("lowPrice")) {
 			ls = itemMapper.findByLowPrice();
-		}else if(condition.equals("recent")) {
+		} else if (condition.equals("recent")) {
 			ls = itemMapper.findLatestItem();
-		}else if(condition.equals("highRate")) {
+		} else if (condition.equals("highRate")) {
 			ls = itemMapper.findByHighRate();
 		}
 		return ls;
 	}
 
-	
-	
 }

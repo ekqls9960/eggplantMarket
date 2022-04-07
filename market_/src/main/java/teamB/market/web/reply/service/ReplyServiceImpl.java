@@ -12,26 +12,25 @@ import teamB.market.domain.question.mapper.ReplyMapper;
 @RequiredArgsConstructor
 public class ReplyServiceImpl implements ReplyService {
 
-    //private final replyMapper replyMapper;
 	private final ReplyMapper replyMapper;
 
-    @Override
-    public void save(Reply reply) {
-        replyMapper.save(reply);
-    }
+	@Override
+	public void save(Reply reply) {
+		replyMapper.save(reply);
+	}
 
-    @Override
-    public List<Reply> findByQuestionId(long id) {
-        return replyMapper.findByQuestionId(id);
-    }
+	@Override
+	public List<Reply> findByQuestionId(long id) {
+		return replyMapper.findByQuestionId(id);
+	}
 
-    @Override
-    public void delete(long id) {
-        replyMapper.delete(id);
-    }
+	@Override
+	public void delete(long id) {
+		replyMapper.delete(id);
+	}
 
-    @Override
-    public Reply findById(long id) {
-        return replyMapper.findById(id);
-    }
+	@Override
+	public Reply findById(long id) {
+		return replyMapper.findById(id);
+	}
 }

@@ -12,29 +12,7 @@
 </head>
 <body>
 	<div class="container">
-	<!--  
-	<input type="button" class="btn btn-secondary btn-lg" value="의류" onclick="windonw.href.location='#'">
-	<input type="button" class="btn btn-secondary btn-lg" value="가전" onclick="windonw.href.location='#'">
-	<input type="button" class="btn btn-secondary btn-lg" value="생활용품" onclick="windonw.href.location='#'">
-	<input type="button" class="btn btn-secondary btn-lg" value="기타" onclick="windonw.href.location='#'">
-	aria-current="page"
-	aria-disabled="true"
-	-->
-	<!--  <ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link" href="${pageContext.request.contextPath}/search/category?category=CLOTHES">의류</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">가전</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">생활용품</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">기타</a>
-  </li>
-	</ul>
-	<hr/>-->
+
 	<jsp:include page="common/tab.jsp"/>
 	<c:if test="${!empty items }">
 	<form action="${pageContext.request.contextPath}/item/search/condition" method="post">
@@ -57,17 +35,13 @@
                 <div class="product-image4">
                     <a href="${pageContext.request.contextPath}/item/detail/${item.id}">
                         <img class="pic-1" width="300" height="400" src="${item.filePath }">
-                        <!--
-                        마우스 갖다댔을 때 나오는 이미지
-                         <img class="pic-2" src="http://bestjquery.com/tutorial/product-grid/demo5/images/img-2.jpg"> -->
-                    </a>
+                          </a>
                     <span class="product-new-label">New</span>
                 </div>
                 <div class="product-content">
                     <h3 class="title">${item.name }</h3>
                     <div class="price">${item.price }
                     </div>
-                    <!--  <a class="add-to-cart" href="">ADD TO CART</a>-->
                 </div>
             </div>
         </div>
@@ -76,6 +50,5 @@
 </div>	
 </c:if>
 </div>
-	<!--<jsp:include page="common/footer.jsp"/>-->
 </body>
 </html>

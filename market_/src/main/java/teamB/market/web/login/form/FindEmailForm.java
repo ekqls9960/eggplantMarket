@@ -5,10 +5,11 @@ import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class FindEmailForm {
 	@NotBlank
-    private String name;
+	private String name;
 	@NotBlank
-    private String phoneNum;
+	private String phoneNum;
 }

@@ -9,18 +9,18 @@ import teamB.market.domain.member.mapper.MemberMapper;
 
 @Service
 @RequiredArgsConstructor
-public class LoginServiceImpl implements LoginService{
-	
+public class LoginServiceImpl implements LoginService {
+
 	private final MemberMapper memberMapper;
 
-    @Override
-    public Member login(String email, String password) {
-    	Member member = null;
-    	if (memberMapper.findByEmail(email).getPwd().equals(password)) {
-    		member = memberMapper.findByEmail(email);
-    	}
-        return member;
-    }
+	@Override
+	public Member login(String email, String password) {
+		Member member = null;
+		if (memberMapper.findByEmail(email).getPwd().equals(password)) {
+			member = memberMapper.findByEmail(email);
+		}
+		return member;
+	}
 
 	@Override
 	public boolean isAuthorizedEmail(String email) {
@@ -33,11 +33,11 @@ public class LoginServiceImpl implements LoginService{
 
 	@Override
 	public String findUserEmail(String name, String phoneNum) {
-		String userEmail=null;
+		String userEmail = null;
 		Member member = memberMapper.findByPhoneNum(phoneNum);
-		if (member!=null) {
+		if (member != null) {
 			if (member.getName().equals(name)) {
-				userEmail= member.getEmail();
+				userEmail = member.getEmail();
 			}
 		}
 		return userEmail;
@@ -46,8 +46,8 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	public boolean isMemberExists(String email) {
 		boolean exist = false;
-		if(memberMapper.findByEmail(email)!=null) {
-			exist= true;
+		if (memberMapper.findByEmail(email) != null) {
+			exist = true;
 		}
 		return exist;
 	}

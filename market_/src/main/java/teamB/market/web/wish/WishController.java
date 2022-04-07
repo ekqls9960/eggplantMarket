@@ -25,35 +25,34 @@ import teamB.market.web.wish.service.WishService;
 @RequestMapping("/wish")
 @RequiredArgsConstructor
 public class WishController {
-	
+
 	private final MemberService memberService;
 	private final WishService wishService;
 	private final ItemService itemService;
-	
-	
-    // 찜 목록 추가
-    @ResponseBody
-    @RequestMapping(method=RequestMethod.POST)
-    public int addWish(@RequestParam("loginSession")String email,@RequestParam("itemId")long itemId) {
-    	int result = -1;
-    	
-        Long memberId = memberService.findByEmail(email).getId();
-        Wish wish = new Wish();
-        wish.setItemId(itemId);
-        wish.setMemberId(memberId);
-        result=wishService.saveWish(wish);
-    	return result;
-    }
+
+	// 찜 목록 추가
+	@ResponseBody
+	@RequestMapping(method = RequestMethod.POST)
+	public int addWish(@RequestParam("loginSession") String email, @RequestParam("itemId") long itemId) {
+		int result = -1;
+
+		Long memberId = memberService.findByEmail(email).getId();
+		Wish wish = new Wish();
+		wish.setItemId(itemId);
+		wish.setMemberId(memberId);
+		result = wishService.saveWish(wish);
+		return result;
+	}
 
 	@GetMapping("/list")
-	public String wishList(HttpSession session,Model model) {
-		String loginSession=(String)session.getAttribute("loginSession");
+	public String wishList(HttpSession session, Model model) {
+		String loginSession = (String) session.getAttribute("loginSession");
 		long memberId = memberService.findByEmail(loginSession).getId();
 		List<Wish> myWishes = wishService.selectMyWishList(memberId);
 		List<Item> myWishItems = new ArrayList<>();
-		
-		for(int i=0; i<myWishes.size(); i++) {
-			long itemId=myWishes.get(i).getItemId();
+
+		for (int i = 0; i < myWishes.size(); i++) {
+			long itemId = myWishes.get(i).getItemId();
 			Item item = itemService.findById(itemId);
 			myWishItems.add(item);
 		}
@@ -61,11 +60,10 @@ public class WishController {
 		model.addAttribute("myWishItems", myWishItems);
 		return "wish/myList";
 	}
-	
+
 	@GetMapping("/remove/{itemId}")
-	public String delete(@PathVariable("itemId")long itemId) {
+	public String delete(@PathVariable("itemId") long itemId) {
 		wishService.remove(itemId);
-		// redirect 시 controller로 간다는거 잊지말구..
 		return "redirect:/wish/list";
 	}
 }

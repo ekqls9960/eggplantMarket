@@ -7,15 +7,16 @@ import lombok.Getter;
 import lombok.Setter;
 import teamB.market.domain.item.Category;
 
-@Getter @Setter
+@Getter
+@Setter
 public class EditItemForm {
-    private long id;
-    private long sellerId;
-    private Category category;
-    @NotBlank
-    private String name;
-    @NotNull
-    private int price;
-    @NotBlank
-    private String content;
+	private long id;
+	private long sellerId;
+	private Category category;
+	@NotBlank
+	private String name;
+	@NotNull
+	private int price;
+	@NotBlank
+	private String content;
 }

@@ -21,56 +21,50 @@ import java.util.List;
 @RequestMapping("reply")
 public class ReplyController {
 
-    private final ReplyService replyService;
-    private final MemberService memberService;
-    private final QuestionService questionService;
+	private final ReplyService replyService;
+	private final MemberService memberService;
+	private final QuestionService questionService;
 
-    @PostMapping("/{questionId}")
-    public String reply(@RequestParam String content, @PathVariable long questionId, HttpServletRequest request, Model model){
+	@PostMapping("/{questionId}")
+	public String reply(@RequestParam String content, @PathVariable long questionId, HttpServletRequest request,
+			Model model) {
 
-        HttpSession session = request.getSession(false);
-        //Member loginMember = (Member) session.getAttribute("loginMember");
-        String loginEmail = (String) session.getAttribute("loginSession");
-        Member loginMember = memberService.findByEmail(loginEmail);
-        Question question = questionService.findById(questionId);
+		HttpSession session = request.getSession(false);
+		String loginEmail = (String) session.getAttribute("loginSession");
+		Member loginMember = memberService.findByEmail(loginEmail);
+		Question question = questionService.findById(questionId);
 
-        // 답글 저장
-        Reply reply = Reply.builder()
-                .questionId(questionId)
-                .content(content)
-                .memberId(loginMember.getId())
-                .build();
+		// 답글 저장
+		Reply reply = Reply.builder().questionId(questionId).content(content).memberId(loginMember.getId()).build();
 
-        replyService.save(reply);
+		replyService.save(reply);
 
-        // 문의사항 답변 완료
-        //question.setIsReplied(IsReplied.COMPLETE);
-        questionService.updateReplyStatus(questionId,IsReplied.COMPLETE);
+		// 문의사항 답변 완료
+		questionService.updateReplyStatus(questionId, IsReplied.COMPLETE);
 
-        // 세션에 저장된 회원정보와 답글 회원정보 비교
-        if(reply.getMemberId() == loginMember.getId()){
-            model.addAttribute("status", true);
-        }
+		// 세션에 저장된 회원정보와 답글 회원정보 비교
+		if (reply.getMemberId() == loginMember.getId()) {
+			model.addAttribute("status", true);
+		}
 
-        return "redirect:/question/detail/" + questionId;
-    }
+		return "redirect:/question/detail/" + questionId;
+	}
 
-    @GetMapping("/{replyId}")
-    public String delete(@PathVariable long replyId, Model model){
-        Reply reply = replyService.findById(replyId);
-        model.addAttribute("questionId", reply.getQuestionId());
-        Question question = questionService.findById(reply.getQuestionId());
+	@GetMapping("/{replyId}")
+	public String delete(@PathVariable long replyId, Model model) {
+		Reply reply = replyService.findById(replyId);
+		model.addAttribute("questionId", reply.getQuestionId());
+		Question question = questionService.findById(reply.getQuestionId());
 
-        // 댓글 삭제 후 댓글 리스트 조회
-        replyService.delete(replyId);
+		// 댓글 삭제 후 댓글 리스트 조회
+		replyService.delete(replyId);
 
-        List<Reply> replyList = replyService.findByQuestionId(reply.getQuestionId());
+		List<Reply> replyList = replyService.findByQuestionId(reply.getQuestionId());
 
-        // 해당 문의사항에 답변 리스트가 없는 경우 답변상태를 WAIT로 수정
-        if(replyList.isEmpty()){
-            //question.setIsReplied(IsReplied.WAIT);
-        	questionService.updateReplyStatus(question.getId(), IsReplied.WAIT);
-        }
-        return "reply/deleteSuccess";
-    }
+		// 해당 문의사항에 답변 리스트가 없는 경우 답변상태를 WAIT로 수정
+		if (replyList.isEmpty()) {
+			questionService.updateReplyStatus(question.getId(), IsReplied.WAIT);
+		}
+		return "reply/deleteSuccess";
+	}
 }

@@ -5,12 +5,13 @@ import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class LoginForm {
-	
+
 	@NotBlank
-    private String email;
+	private String email;
 	@NotBlank
-    private String password;
-    private boolean rememberEmail;
+	private String password;
+	private boolean rememberEmail;
 }
