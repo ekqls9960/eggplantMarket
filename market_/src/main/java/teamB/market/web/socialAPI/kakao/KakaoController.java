@@ -111,7 +111,6 @@ public class KakaoController {
 				result += line;
 			}
 
-			System.out.println("responseBody" + result);
 
 			// Gson 라이브러리에 포함된 클래스로 json 데이터 읽어들이기
 			JsonElement element = JsonParser.parseString(result);

@@ -29,7 +29,9 @@
 			<hr />
 			<h3>소셜 계정으로 시작하기</h3>
 			<a
-				href="https://kauth.kakao.com/oauth/authorize?client_id=f98f37d47a62be09db4e5ccfed265b61&redirect_uri=http://localhost:8080/myapp/loginCallBack&response_type=code">
+				href="https://kauth.kakao.com/oauth/authorize?client_id
+				=f98f37d47a62be09db4e5ccfed265b61&redirect_uri=http://localhost:
+				8080/myapp/loginCallBack&response_type=code">
 				<img src="/images/kakao_login.png">
 			</a>&nbsp;
 			<hr />

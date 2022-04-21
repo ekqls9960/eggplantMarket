@@ -43,10 +43,10 @@ public class MemberController {
 	}
 
 	// 소셜 회원가입
-	// 어떤 소셜 경로로 들어왔는지 @RequestParam으로 받는것을... 고려해보기!
 	@PostMapping("/socialAdd")
 	@ResponseBody
-	public String socialAdd(@Validated @ModelAttribute("member") SocialAddMemberForm form, BindingResult bindingResult,
+	public String socialAdd(@Validated @ModelAttribute("member") SocialAddMemberForm form, 
+			BindingResult bindingResult,
 			Model model, @RequestParam(required = false) String access) {
 
 		// @NotBlank와 같이 validation 라이브러리가 제공하는 유효성 검사
@@ -101,7 +101,7 @@ public class MemberController {
 		member.setPwd(pwd);
 
 		memberService.join(member);
-		System.out.println(member);
+	
 
 		// 회원가입 완료 alert
 		String alertMsg = "<script>alert('회원가입 완료!');location.href='/login';</script>";
