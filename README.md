@@ -12,7 +12,10 @@
 
 ***
 
+<img width="762" alt="스크린샷 2022-04-25 오후 6 00 44" src="https://user-images.githubusercontent.com/97011093/165056505-51bcbb7f-06fe-4576-b540-5d72e935bb95.png">
 
+
+---
 ## 요구사항 
 
 1. 회원관리
